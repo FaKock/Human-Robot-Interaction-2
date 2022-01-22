@@ -8,9 +8,6 @@ public class SoundManager : MonoBehaviour
 {
     public enum Sound
     {
-        OroVoice,
-        KyleVoice,
-        BackgroundHospital,
         BackgroundStreet,
         FootSteps,
         Desinfection,
