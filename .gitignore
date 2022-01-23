@@ -133,5 +133,5 @@ crashlytics-build.properties
 *.log
 */Temp
 */Artifacts
-*over/Library
+*/Library
 */Logs
