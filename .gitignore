@@ -133,11 +133,5 @@ crashlytics-build.properties
 *.log
 */Temp
 */Artifacts
-*/ArtifactDB
-*/ArtifactDB-lock
-*/ShaderCache
-*/SourceAssetDB
-*/SourceAssetDB-lock
-*/PackageCache
-*/StateCache
-*/Library
+*over/Library
+*/Logs
