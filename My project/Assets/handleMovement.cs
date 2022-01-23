@@ -15,7 +15,10 @@ public class handleMovement : MonoBehaviour
     private Vector3 worldDeltaPosition;
     private Vector2 groundDeltaPosition;
     private  Vector2 velocity = Vector2.zero;
+    public Transform target;
 
+    Vector3 lastPosition;
+    
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -36,7 +39,10 @@ public class handleMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            agent.SetDestination(hit.point);
+            if (Input.GetMouseButtonDown(1))
+            {
+                agent.SetDestination(hit.point);
+            }
         }
         
         /*
@@ -58,12 +64,17 @@ public class handleMovement : MonoBehaviour
         /*
          * not arrived to destination --> move animator
          */
+        
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, worldDeltaPosition, 0.1f, 0.0f);
+        Debug.DrawRay(transform.position, agent.nextPosition.normalized, Color.green);
+        Debug.DrawRay(transform.position, newDirection, Color.red);
+        
+        
         bool shallMove = velocity.magnitude > 0.025f && agent.remainingDistance > agent.radius;
+        
         anim.SetBool("move", shallMove);
         anim.SetFloat("velx", velocity.x);
-        Debug.Log(velocity.x);
         anim.SetFloat("vely", velocity.y);
-        Debug.Log(velocity.y);
 
     }
 

@@ -45,7 +45,7 @@ AnimatorState:
   - {fileID: 1581792263093684643}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -93,7 +93,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: velx
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3705244687729981044}
   m_Solo: 0
@@ -122,7 +122,7 @@ AnimatorState:
   - {fileID: -6577450766651376997}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -235,7 +235,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: velx
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9143605292568781756}
   m_Solo: 0
@@ -338,7 +338,7 @@ AnimatorState:
   - {fileID: 7864784304976665304}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -365,7 +365,7 @@ AnimatorState:
   - {fileID: 1931442218245163778}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
