@@ -15,7 +15,7 @@ public class handleMovement : MonoBehaviour
     private Vector3 worldDeltaPosition;
     private Vector2 groundDeltaPosition;
     private  Vector2 velocity = Vector2.zero;
-    
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
