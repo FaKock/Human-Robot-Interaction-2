@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
@@ -12,22 +13,36 @@ public class SoundManager : MonoBehaviour
         FootSteps,
         Desinfection,
         OpenWindow,
-        OpenDoor
+        OpenDoor,
+        CloseDoor
+    }
+
+    public enum Voice
+    {
+        oro,
+        kyle
     }
     
 
     private static GameObject oneShotGameObject;
     private static AudioSource oneShotAudioSource;
 
-    private static Dictionary<Sound, float> soundTimerDictionary;
-
+    public AudioSource audioSource;
     public SoundAudioClip[] soundAudioClipArray;
+    public VoiceAudioClip[] voiceAudioClipsArray;
 
     [System.Serializable]
     public class SoundAudioClip
     {
         public SoundManager.Sound sound;
         public AudioClip audioClip;
+
+    }
+    [System.Serializable]
+    public class VoiceAudioClip
+    {
+        public SoundManager.Voice voice;
+        public List<AudioClip> audioClipList;
 
     }
 
@@ -45,74 +60,44 @@ public class SoundManager : MonoBehaviour
         return null;
     }
     
-    // Play 2D Sound
-    public void PlaySound(Sound sound) {
-        if (CanPlaySound(sound))
-        {
-            if (oneShotGameObject == null)
-            {
-                oneShotGameObject = new GameObject("One Shot Sound");
-                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
-            }
-            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));  
-        }
 
-    }
     
     // Play 3D sound based on object position
-    public void PlaySound(Sound sound, Vector3 position) {
-        if (CanPlaySound(sound))
+    public void PlaySound(Sound sound)
+    {
+        if (!audioSource.isPlaying)
         {
-            GameObject soundGameObject = new GameObject("Sound");
-            soundGameObject.transform.position = position;
-            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+
             audioSource.clip = GetAudioClip(sound);
             audioSource.Play();
             
-            Object.Destroy(soundGameObject, audioSource.clip.length);
         }
 
     }
     
-    // If sound is called at runtime check if sound already plays
-    private static bool CanPlaySound(Sound sound)
-    {
-        switch(sound)
-        {
-            default:
-                return true;
-            case Sound.FootSteps:
-                if (soundTimerDictionary.ContainsKey(sound))
-                {
-                    float lastTimePlayed = soundTimerDictionary[sound];
-                    float movemtTimeMax = 0.05f;
-                    if (lastTimePlayed + movemtTimeMax < Time.time)
-                    {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
-        }
-    }
-    
+ 
     // play Voice Recording
-    public void PlayVoice(String name, String clipNum,  Vector3 position)
+    private AudioClip VoiceGetAudioClip(Voice voice, int num)
     {
-        String filename = clipNum + "_" + name + ".mp3";
-        GameObject soundGameObject = new GameObject("Sound");
-        soundGameObject.transform.position = position;
-        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.PlayOneShot((AudioClip)Resources.Load(filename));
-        
-        Object.Destroy(soundGameObject, audioSource.clip.length);
+        foreach (VoiceAudioClip voiceAudioClip in voiceAudioClipsArray)
+        {
+            if (voiceAudioClip.voice == voice)
+            {
+                List<AudioClip> temp = voiceAudioClip.audioClipList;
+                return temp[num];
+            }
+        }
+        Debug.LogError("Sound" + voice + "not found!!!");
+        return null;
+    }
+    public void PlayVoice(Voice voice, int num)
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = VoiceGetAudioClip(voice, num);
+            audioSource.Play(); 
+        }
+
 
     }
 }
