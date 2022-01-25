@@ -43,11 +43,10 @@ public class PointCollection : MonoBehaviour
     {
         for (int i = 0; i < points.Count; i++)
         {
-            if (i != 5)
+            if (i != 6)
             {
                 //yield return new WaitUntil(() => Door.GetComponent<Animation>());
                 agent.isStopped = false;
-                Debug.Log(i);
                 Vector3 point = points[i].transform.position;
                 agent.SetDestination(point);
                 yield return new WaitUntil(() => agent.remainingDistance != 0);
@@ -55,12 +54,10 @@ public class PointCollection : MonoBehaviour
                 //LookAt(player.transform.position);
                 yield return new WaitForSeconds(0.5f);
                 agent.isStopped = true;
-                Debug.Log("agent stopped");
                 yield return new WaitForSeconds(0.2f);
                 soundManager.PlayVoice(SoundManager.Voice.kyle, i);
                 yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
                 yield return new WaitForSeconds(0.5f);
-                Debug.Log("One sequence done");
                 if (i == 1)
                 {
                     LookAt(bottleOdesinfect.transform.position);
@@ -83,23 +80,20 @@ public class PointCollection : MonoBehaviour
                     anim.SetInteger("LookTowardsPlayer", 14);
                 }
 
-                if (i == 5)
+               if (i == 5)
                 {
                     anim.SetInteger("LookTowardsPlayer", 9);
                     soundManager.PlaySound(SoundManager.Sound.OpenWindow);
                     yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
                     yield return new WaitForSeconds(0.5f);
+                    points[i].GetComponent<AudioSource>().Play();
                     anim.SetInteger("LookTowardsPlayer", 10);
                 }
             }
-            else {}
-            
-            
-            if (i == 5)
+            else 
             {
-                //yield return new WaitUntil(() => Door.GetComponent<Animation>());
+                
                 agent.isStopped = false;
-                Debug.Log(i);
                 Vector3 point = points[i].transform.position;
                 agent.SetDestination(point);
                 yield return new WaitUntil(() => agent.remainingDistance != 0);
@@ -107,13 +101,11 @@ public class PointCollection : MonoBehaviour
                 //LookAt(player.transform.position);
                 yield return new WaitForSeconds(0.5f);
                 agent.isStopped = true;
-                Debug.Log("agent stopped");
                 yield return new WaitForSeconds(0.2f);
                 anim.SetInteger("LookTowardsPlayer", 15);
                 soundManager.PlayVoice(SoundManager.Voice.kyle, i);
                 yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
                 yield return new WaitForSeconds(0.5f);
-                Debug.Log("One sequence done");
                 anim.SetInteger("LookTowardsPlayer", 16);
             }
 
