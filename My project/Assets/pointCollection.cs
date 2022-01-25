@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,12 +13,20 @@ public class PointCollection : MonoBehaviour
     
     private NavMeshAgent agent;
     public SoundManager soundManager;
+    public GameObject player;
+
+    public GameObject bottleOdesinfect;
+    public GameObject Door;
+
+    private Animator anim;
 
     private bool isRunning = false;
+    static float t = 0.0f;
+    
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updatePosition = false;
+        anim = GetComponent<Animator>();
 
     }
 
@@ -33,20 +42,94 @@ public class PointCollection : MonoBehaviour
     IEnumerator SetRoutine()
     {
         for (int i = 0; i < points.Count; i++)
-        { 
-            agent.isStopped = false;
-            Debug.Log(i);
-            Vector3 point = points[i].transform.position;
-            agent.SetDestination(point);
-            yield return new WaitUntil(() => agent.remainingDistance < 0.005f);
-            agent.isStopped = true;
-            yield return new WaitForSeconds(0.5f);
-            Debug.Log("walking done. Voice now");
-            soundManager.PlayVoice(SoundManager.Voice.kyle, i);
-            yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
-            yield return new WaitForSeconds(0.5f);
-            Debug.Log("One sequence done");
+        {
+            if (i != 5)
+            {
+                //yield return new WaitUntil(() => Door.GetComponent<Animation>());
+                agent.isStopped = false;
+                Debug.Log(i);
+                Vector3 point = points[i].transform.position;
+                agent.SetDestination(point);
+                yield return new WaitUntil(() => agent.remainingDistance != 0);
+                yield return new WaitUntil(() => agent.remainingDistance < 0.0005f);
+                //LookAt(player.transform.position);
+                yield return new WaitForSeconds(0.5f);
+                agent.isStopped = true;
+                Debug.Log("agent stopped");
+                yield return new WaitForSeconds(0.2f);
+                soundManager.PlayVoice(SoundManager.Voice.kyle, i);
+                yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
+                yield return new WaitForSeconds(0.5f);
+                Debug.Log("One sequence done");
+                if (i == 1)
+                {
+                    LookAt(bottleOdesinfect.transform.position);
+                    anim.SetInteger("LookTowardsPlayer", 4);
+                    soundManager.PlaySound(SoundManager.Sound.Desinfection);
+                    yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
+                    yield return new WaitForSeconds(0.5f);
+                    anim.SetInteger("LookTowardsPlayer", 5);
+                }
+
+                if (i == 2)
+                {
+                    anim.Play("tabletshow");
+                }
+
+                if (i == 4)
+                {
+                    anim.SetInteger("LookTowardsPlayer", 13);
+                    yield return new WaitForSeconds(2f);
+                    anim.SetInteger("LookTowardsPlayer", 14);
+                }
+
+                if (i == 5)
+                {
+                    anim.SetInteger("LookTowardsPlayer", 9);
+                    soundManager.PlaySound(SoundManager.Sound.OpenWindow);
+                    yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
+                    yield return new WaitForSeconds(0.5f);
+                    anim.SetInteger("LookTowardsPlayer", 10);
+                }
+            }
+            else {}
+            
+            
+            if (i == 5)
+            {
+                //yield return new WaitUntil(() => Door.GetComponent<Animation>());
+                agent.isStopped = false;
+                Debug.Log(i);
+                Vector3 point = points[i].transform.position;
+                agent.SetDestination(point);
+                yield return new WaitUntil(() => agent.remainingDistance != 0);
+                yield return new WaitUntil(() => agent.remainingDistance < 0.0005f);
+                //LookAt(player.transform.position);
+                yield return new WaitForSeconds(0.5f);
+                agent.isStopped = true;
+                Debug.Log("agent stopped");
+                yield return new WaitForSeconds(0.2f);
+                anim.SetInteger("LookTowardsPlayer", 15);
+                soundManager.PlayVoice(SoundManager.Voice.kyle, i);
+                yield return new WaitUntil(() => soundManager.audioSource.isPlaying == false);
+                yield return new WaitForSeconds(0.5f);
+                Debug.Log("One sequence done");
+                anim.SetInteger("LookTowardsPlayer", 16);
+            }
+
+
         }
     }
+
+    private bool LookAt(Vector3 pos)
+    {
+        Vector3 lookPos = pos - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, rotation, 5f);
+        return true; // TODO
+
+    }
+    
 
 }
