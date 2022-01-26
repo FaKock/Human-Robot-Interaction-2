@@ -40,14 +40,14 @@ public class FensterHandler : MonoBehaviour
         
         if (weight == 1.0F)
         {
-            /*
+            
             Vector3 destination = FensterGrabPoint.position;
             destination.z = destination.z - 0.238F;
 
             robotAnimator.SetIKPosition(AvatarIKGoal.RightHand, FensterGrabPoint.position);
             robotAnimator.SetIKRotation(AvatarIKGoal.RightHand, FensterGrabPoint.rotation);
             t += 0.5f * Time.deltaTime;
-            */
+            
         }
 
         //if IK is not active
