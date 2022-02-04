@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Hospital Room/Scene/Demo.unity
     guid: d3f737cb3030b6943afcdf1b55b73b9b
+  - enabled: 1
+    path: Assets/Ending Scene.unity
+    guid: 3d9098a2dcc5d49468209acf4ba5b335
   m_configObjects: {}
