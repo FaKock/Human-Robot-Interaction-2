@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Loading Screen.unity
+    guid: b7593ab4041691d4a9d78c42c68ed9ea
+  - enabled: 1
+    path: Assets/Hospital Room/Scene/Demo.unity
+    guid: d3f737cb3030b6943afcdf1b55b73b9b
   m_configObjects: {}
